@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitBuddy | Your Plan</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+<main class="page">
+  <section class="card">
+    <div class="topbar">
+      <div>
+        <span class="badge">YOUR FITBUDDY PLAN</span>
+        <h1>Hello, {{ user.username }} 👋</h1>
+      </div>
+      <a class="button secondary" href="/">New Plan</a>
+    </div>
+
+    {% if message %}
+      <div class="alert success">{{ message }}</div>
+    {% endif %}
+
+    <div class="profile">
+      <div><strong>User ID</strong><span>{{ user.user_id }}</span></div>
+      <div><strong>Age</strong><span>{{ user.age }}</span></div>
+      <div><strong>Weight</strong><span>{{ user.weight }} kg</span></div>
+      <div><strong>Goal</strong><span>{{ user.goal }}</span></div>
+      <div><strong>Intensity</strong><span>{{ user.intensity|title }}</span></div>
+    </div>
+
+    <section class="result-box">
+      <h2>7-Day Workout Plan</h2>
+      <pre>{{ plan.updated_plan or plan.original_plan }}</pre>
+    </section>
+
+    <section class="result-box tip">
+      <h2>Nutrition / Recovery Tip</h2>
+      <p>{{ plan.nutrition_tip }}</p>
+    </section>
+
+    <section class="result-box">
+      <h2>Update Your Plan</h2>
+      <form action="/submit-feedback" method="post">
+        <input type="hidden" name="user_id" value="{{ user.user_id }}">
+        <label>
+          Feedback
+          <textarea name="feedback" rows="5" maxlength="2000" required
+            placeholder="Example: I would prefer more rest-oriented activities."></textarea>
+        </label>
+        <button class="button primary" type="submit">Update with AI</button>
+      </form>
+    </section>
+
+    <p class="note">General wellness information — not medical advice.</p>
+  </section>
+</main>
+</body>
+</html>
